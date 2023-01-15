@@ -5,7 +5,10 @@ class Styles {
   static const _textSizeSmall = 18.0;
   static final Color _textColorStrong = Colors.black;
   static final Color _textColorDefault = Colors.black45;
-  static final String _fontNameDefault = 'Noto';
+  static final String _fontNameDefault = 'Muli';
+  static final navBarTitle = TextStyle(
+    fontFamily: _fontNameDefault
+  );
   static final headerLarge = TextStyle(
       fontSize: _textSizeLarge,
       color: _textColorStrong,
