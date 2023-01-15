@@ -13,11 +13,13 @@ class LocationDetail extends StatelessWidget {
       appBar: AppBar(title: Text(location.name,
       style: Styles.navBarTitle,),
       ),
-      body: Column(
+      body: SingleChildScrollView(
+        child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: _renderBody(context, location),
       ),
+      )
     );
   }
 
@@ -61,7 +63,6 @@ class LocationDetail extends StatelessWidget {
       constraints: BoxConstraints.tightFor(height: height),
       child: Image.network(url, fit: BoxFit.fitWidth),
       margin: EdgeInsets.all(10.0),
-
     );
   }
 }
