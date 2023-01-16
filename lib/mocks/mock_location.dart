@@ -52,11 +52,15 @@ class MockLocation extends Location {
         ])
   ];
 
-static Location FetchAny() {
-  return items[0];
-}
+  static Location FetchAny() {
+    return items[0];
+  }
 
-static List<Location> FetchAll(){
-  return MockLocation.items;
-}
+  static List<Location> FetchAll() {
+    return MockLocation.items;
+  }
+
+  static Location Fetch(int index) {
+    return MockLocation.items[index];
+  }
 }
