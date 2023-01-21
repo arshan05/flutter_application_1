@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
@@ -21,7 +20,14 @@ class Location {
       required this.url,
       required this.facts});
 
-  factory Location.fromJson(Map<String, dynamic> json) => _$LocationFromJson(json);
+  Location.blank()
+      : id = 0,
+        name = '',
+        url = '',
+        facts = [];
+
+  factory Location.fromJson(Map<String, dynamic> json) =>
+      _$LocationFromJson(json);
 
   static Future<List<Location>> fetchAll() async {
     var uri = Endpoint.uri('/locations', queryParameters: {});

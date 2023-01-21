@@ -1,4 +1,5 @@
 import 'dart:core';
+
 class Endpoint {
   static const apiScheme = 'https';
   static const apiHost = 'fluttercrashcourse.com';
