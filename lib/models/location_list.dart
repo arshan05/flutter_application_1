@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Styles.dart';
+import 'package:flutter_application_1/components/banner_image.dart';
+import 'package:flutter_application_1/components/default_app_bar.dart';
 import 'package:flutter_application_1/components/location_tile.dart';
 import 'package:flutter_application_1/loaction_detail.dart';
 import 'package:flutter_application_1/models/location.dart';
@@ -26,12 +28,7 @@ class _LocationListState extends State<LocationList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Locations",
-            style: Styles.navBarTitle,
-          ),
-        ),
+        appBar: DefaultAppBar(),
         body: RefreshIndicator(
             onRefresh: loadData,
             child: Column(
@@ -60,8 +57,7 @@ class _LocationListState extends State<LocationList> {
         child: Container(
           height: ListItemHeight,
           child: Stack(children: [
-            _tileImage(location.url, MediaQuery.of(context).size.width,
-                ListItemHeight),
+            BannerImage(url: location.url, height: ListItemHeight),
             _tileFooter(location),
           ]),
         ));
@@ -92,10 +88,6 @@ class _LocationListState extends State<LocationList> {
         ));
   }
 
-  _itemTitle(Location location) {
-    return Text(location.name, style: Styles.textDefault);
-  }
-
   Widget _tileFooter(Location location) {
     final info = LocationTile(location: location, darkTheme: true);
     final overlay = Container(
@@ -109,21 +101,5 @@ class _LocationListState extends State<LocationList> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [overlay],
     );
-  }
-
-  Widget _tileImage(String url, double width, double height) {
-    if (url.isEmpty) {
-      return Container();
-    }
-
-    try {
-      return Container(
-        constraints: BoxConstraints.expand(),
-        child: Image.network(url, fit: BoxFit.cover),
-      );
-    } catch (e) {
-      print("could not load image $url");
-      return Container();
-    }
   }
 }

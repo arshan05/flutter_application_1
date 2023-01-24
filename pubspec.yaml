@@ -70,9 +70,12 @@ flutter:
   uses-material-design: true
 
   fonts:
-    - family: Noto
+    - family: Montserrat
       fonts:
-        - asset: assets/fonts/NotoSans-Regular.ttf
+        - asset: assets/fonts/Montserrat-Regular.ttf
+          weight: 300
+        - asset: assets/fonts/Montserrat-Bold.ttf
+          weight: 600
     - family: Muli
       fonts:
         - asset: assets/fonts/Muli-Regular.ttf
