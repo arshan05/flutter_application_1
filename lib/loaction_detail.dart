@@ -3,8 +3,9 @@ import 'package:flutter_application_1/Styles.dart';
 import 'package:flutter_application_1/mocks/mock_location.dart';
 import 'package:flutter_application_1/models/location.dart';
 
-class LocationDetail extends StatefulWidget{
+class LocationDetail extends StatefulWidget {
   final int locationID;
+
   LocationDetail(this.locationID);
 
   @override
@@ -14,9 +15,13 @@ class LocationDetail extends StatefulWidget{
 class _LocationDetailState extends State<LocationDetail> {
   final int locationId;
   Location location = Location.blank();
+
   _LocationDetailState(this.locationId);
 
-  @override void initState() {
+  bool loading = false;
+
+  @override
+  void initState() {
     super.initState();
     loadData();
   }
@@ -24,27 +29,45 @@ class _LocationDetailState extends State<LocationDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(location.name,
-      style: Styles.navBarTitle,),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: _renderBody(context, location),
-      ),
-      )
-    );
+        appBar: AppBar(
+          title: Text(
+            location.name,
+            style: Styles.navBarTitle,
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              renderProgressBar(context),
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: _renderBody(context, location))
+            ],
+          ),
+        ));
   }
 
-  loadData() async{
+  loadData() async {
+    setState(() => this.loading = true);
     final location = await Location.fetchByID(this.locationId);
 
-    if(mounted){
+    if (mounted) {
       setState(() {
         this.location = location;
+        this.loading = false;
       });
     }
+  }
+
+  Widget renderProgressBar(BuildContext context) {
+    return this.loading
+        ? LinearProgressIndicator(
+            value: null,
+            backgroundColor: Colors.white,
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+          )
+        : Container();
   }
 
   List<Widget> _renderBody(BuildContext context, Location location) {
@@ -67,28 +90,29 @@ class _LocationDetailState extends State<LocationDetail> {
   Widget _sectionTitle(String title) {
     return Container(
         padding: EdgeInsets.all(10.0),
-        child: Text(title,
+        child: Text(
+          title,
           textAlign: TextAlign.left,
           style: Styles.headerLarge,
-        )
-    );
+        ));
   }
 
   Widget _sectionText(String text) {
     return Container(
-      padding: EdgeInsets.all(10.0),
-      child: Text(text,
-        style: Styles.textDefault,)
-    );
+        padding: EdgeInsets.all(10.0),
+        child: Text(
+          text,
+          style: Styles.textDefault,
+        ));
   }
 
   Widget _bannerImage(String url, double height) {
     var image;
     try {
-      if(url.isNotEmpty){
+      if (url.isNotEmpty) {
         image = Image.network(url, fit: BoxFit.fitWidth);
       }
-    }catch(e){
+    } catch (e) {
       print("couldn't load $url");
     }
 
@@ -99,5 +123,3 @@ class _LocationDetailState extends State<LocationDetail> {
     );
   }
 }
-
-
